@@ -18,5 +18,22 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     const socket = io();
+    const name = prompt("tên bạn là gì?");
+    const chatForm = document.querySelector("#chat-form");
+    const chatMes = document.querySelector("#chat-mes");
+
+    chatForm.addEventListener("submit", (e)=>{
+        e.preventDefault();
+        const message = chatMes.value;
+        socket.emit('on-chat', {name, message: message});
+        chatMes.value = '';
+    });
+
+    const messages = document.querySelector("#messages");
+    socket.on('user-chat', (message)=>{
+        const chatItem = document.createElement('li');
+        chatItem.textContent = `${message.name}: ${message.message}`;
+        messages.appendChild(chatItem);  
+    });
 </script>
 </html>

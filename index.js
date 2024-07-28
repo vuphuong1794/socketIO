@@ -12,6 +12,10 @@ app.get("/", (req, res)=>{
 
 io.on('connection', (socket)=>{
     console.log("user connected")
+    socket.on('on-chat', data=>{
+        console.log(data)
+        io.emit('user-chat',data)
+    })
 })
 
 server.listen(8000, (req, res)=>{
